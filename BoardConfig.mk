@@ -1,68 +1,50 @@
+#
+# Copyright (C) 2017 The LineageOS Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+# Inherit from common
+include device/samsung/msm8226-common/BoardConfigCommon.mk
+
 LOCAL_PATH := device/samsung/rubenslte
 
-# Architecture
-TARGET_ARCH := arm
-TARGET_ARCH_VARIANT := armv7-a-neon
-TARGET_CPU_VARIANT := krait
-TARGET_CPU_ABI := armeabi-v7a
-TARGET_CPU_ABI2 := armeabi
-TARGET_CPU_SMP := true
-ARCH_ARM_HAVE_TLS_REGISTER := true
+# Asserts
+TARGET_OTA_ASSERT_DEVICE := rubenslte,rubensltexx
 
-# Board
-TARGET_BOOTLOADER_BOARD_NAME := MSM8226
-TARGET_BOARD_PLATFORM := msm8226
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
+# Audio
+USE_QCOM_MIXER_PATHS := 1
 
-# Bootloader
-TARGET_NO_BOOTLOADER := true
-BOARD_VENDOR := samsung
-
-# Boot image
-TARGET_PREBUILT_DT := $(LOCAL_PATH)/dt.img
-TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/zImage
-BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 androidboot.selinux=permissive
-BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02000000
-BOARD_MKBOOTIMG_ARGS += --tags_offset 0x01e00000 --dt $(TARGET_PREBUILT_DT)
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/bootimg.mk
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 
 # Kernel
-TARGET_KERNEL_ARCH := arm
-TARGET_KERNEL_HEADER_ARCH := arm
+TARGET_KERNEL_VARIANT_CONFIG := msm8226_sec_rubenslte_eur_defconfig
 
-# Filesystems
-BOARD_HAS_LARGE_FILESYSTEM := true
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
-BOARD_SUPPRESS_SECURE_ERASE := true
+# Keymaster
+TARGET_PROVIDES_KEYMASTER := true
 
-# Partitions
-BOARD_BOOTIMAGE_PARTITION_SIZE := 10485248
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 10485248
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2411724288
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 12843662336
-BOARD_CACHEIMAGE_PARTITION_SIZE := 314572288
-BOARD_FLASH_BLOCK_SIZE := 131072
+# Lights
+TARGET_PROVIDES_LIBLIGHT := false
 
-# Time services
-BOARD_USES_QC_TIME_SERVICES := true
-TARGET_RECOVERY_QCOM_RTC_FIX := true
+# Partition sizes
+BOARD_SYSTEMIMAGE_PARTITION_SIZE    := 2936012800
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 27890008064
+BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
 
-# TWRP
-TW_THEME := portrait_mdpi
-RECOVERY_SDCARD_ON_DATA := true
-TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/msm_hsusb/gadget/lun%d/file"
-TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
-TW_MAX_BRIGHTNESS := 255
-TW_DEFAULT_BRIGHTNESS := 128
-TW_NO_REBOOT_BOOTLOADER := true
-TW_HAS_DOWNLOAD_MODE := true
-TW_NO_EXFAT_FUSE := true
-TW_MTP_DEVICE := "/dev/mtp_usb"
-TW_EXCLUDE_TWRPAPP := true
-TW_EXCLUDE_NANO := true
-TW_EXCLUDE_BASH := true
+# RIL
+BOARD_PROVIDES_LIBRIL := false
 
+# Shims
+TARGET_LD_SHIM_LIBS := \
+    /system/vendor/lib/libperipheral_client.so|libshim_binder.so
