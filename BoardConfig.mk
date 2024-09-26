@@ -29,7 +29,7 @@ USE_QCOM_MIXER_PATHS := 1
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 
 # Kernel
-TARGET_KERNEL_VARIANT_CONFIG := lineage_rubenslte_defconfig
+TARGET_KERNEL_CONFIG := lineage_rubenslte_defconfig
 
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
